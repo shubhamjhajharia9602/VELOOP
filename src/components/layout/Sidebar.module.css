@@ -1,0 +1,399 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 200;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 16px 16px;
+  overflow-y: auto;
+  background: #101116;
+  border-right: 1px solid rgba(255, 255, 255, 0.07);
+  color: #f5f5f7;
+  transition: transform 0.3s ease;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #353641;
+  border-radius: 10px;
+}
+
+.sidebarOverlay {
+  display: none;
+}
+
+/* Brand */
+
+.sidebarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.sidebarBrand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+}
+
+.sidebarLogo {
+  width: 43px;
+  height: 43px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #111116;
+  background: linear-gradient(135deg, #f0d995, #c9a64e);
+  border-radius: 13px;
+  font-size: 19px;
+  font-weight: 900;
+  box-shadow: 0 5px 20px rgba(213, 181, 107, 0.15);
+}
+
+.sidebarBrandText {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.sidebarBrandName {
+  margin: 0;
+  color: #f7f3e9;
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.sidebarBrandTagline {
+  margin: 0;
+  color: #8d8e99;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+}
+
+.sidebarClose {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  color: #a5a6b0;
+  background: #1b1c23;
+  border: 1px solid #30313b;
+  border-radius: 9px;
+  cursor: pointer;
+}
+
+/* Profile */
+
+.sidebarProfile {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 13px 11px;
+  margin-bottom: 18px;
+  background: #181920;
+  border: 1px solid #292a33;
+  border-radius: 13px;
+}
+
+.sidebarAvatar {
+  position: relative;
+  width: 39px;
+  height: 39px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #e8c875;
+  background: #302a1d;
+  border: 1px solid rgba(213, 181, 107, 0.25);
+  border-radius: 11px;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.sidebarOnlineIndicator {
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  width: 10px;
+  height: 10px;
+  background: #55d69e;
+  border: 2px solid #181920;
+  border-radius: 50%;
+}
+
+.sidebarProfileInfo {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.sidebarProfileLabel {
+  color: #898b96;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.sidebarProfileName {
+  overflow: hidden;
+  color: #f1f1f4;
+  font-size: 12px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* XP card */
+
+.sidebarXpCard {
+  padding: 15px;
+  margin-bottom: 28px;
+  background: linear-gradient(
+    135deg,
+    rgba(213, 181, 107, 0.13),
+    rgba(213, 181, 107, 0.035)
+  );
+  border: 1px solid rgba(213, 181, 107, 0.2);
+  border-radius: 13px;
+}
+
+.sidebarXpTop {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 11px;
+}
+
+.sidebarXpIcon {
+  display: flex;
+  color: #e9c878;
+}
+
+.sidebarXpLabel {
+  color: #b7a77d;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.sidebarXpValue {
+  margin: 0 0 7px;
+  color: #f3d78e;
+  font-size: 27px;
+  font-weight: 800;
+  letter-spacing: -0.8px;
+}
+
+.sidebarXpFooter {
+  color: #93939d;
+  font-size: 10px;
+}
+
+/* Navigation */
+
+.sidebarNavigation {
+  flex: 1;
+}
+
+.sidebarSectionLabel {
+  margin: 0 0 12px 10px;
+  color: #747580;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+}
+
+.sidebarNavList {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.sidebarNavItem {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 11px;
+  color: #9697a2;
+  text-align: left;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.sidebarNavItem:hover {
+  color: #f0d995;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.sidebarNavItem.active {
+  color: #f0d995;
+  background: rgba(213, 181, 107, 0.09);
+  border-color: rgba(213, 181, 107, 0.17);
+}
+
+.sidebarNavIcon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sidebarNavCopy {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sidebarNavLabel {
+  color: inherit;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.sidebarNavDescription {
+  color: #747580;
+  font-size: 10px;
+}
+
+.sidebarNavItem.active .sidebarNavDescription {
+  color: #b7a77d;
+}
+
+.sidebarNavArrow {
+  display: flex;
+  color: #d5b56b;
+}
+
+/* Bottom section */
+
+.sidebarBottom {
+  margin-top: 24px;
+}
+
+.sidebarBottomDecoration {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 12px;
+  margin-bottom: 18px;
+  overflow: hidden;
+  background: #191a21;
+  border: 1px solid #2a2b34;
+  border-radius: 12px;
+}
+
+.sidebarBottomIcon {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #e9c878;
+  background: rgba(213, 181, 107, 0.1);
+  border-radius: 10px;
+}
+
+.sidebarBottomDecoration p {
+  margin: 0;
+  color: #c9c9d0;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.sidebarFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 4px 0;
+  border-top: 1px solid #282932;
+}
+
+.sidebarFooterDot {
+  width: 7px;
+  height: 7px;
+  margin-right: 6px;
+  background: #55d69e;
+  border-radius: 50%;
+}
+
+.sidebarFooterVersion {
+  color: #777985;
+  font-size: 10px;
+}
+
+/* Responsive */
+
+@media (max-width: 850px) {
+  .sidebar {
+    transform: translateX(-100%);
+    z-index: 1001;
+  }
+
+  .sidebar.sidebarOpen {
+    transform: translateX(0);
+  }
+
+  .sidebarOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: block;
+    background: rgba(0, 0, 0, 0.65);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      opacity 0.3s ease,
+      visibility 0.3s ease;
+  }
+
+  .sidebarOverlay.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .sidebarClose {
+    display: flex;
+  }
+}
+
+@media (max-width: 380px) {
+  .sidebar {
+    width: min(280px, 85vw);
+  }
+}

@@ -1,0 +1,396 @@
+.roadmap {
+  padding: 25px;
+  border: 1px solid rgba(212, 175, 55, 0.18);
+  border-radius: 18px;
+  background: linear-gradient(145deg, #151a2e 0%, #101426 100%);
+  color: #f5f5f7;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.16);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.eyebrow {
+  display: block;
+  margin-bottom: 7px;
+  color: #d0ad4f;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.7px;
+}
+
+.title {
+  margin: 0;
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.subtitle {
+  margin: 8px 0 0;
+  color: #9298ad;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.headerIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  flex-shrink: 0;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 13px;
+  background: rgba(212, 175, 55, 0.1);
+  color: #e4bd52;
+}
+
+.summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 12px;
+  margin-bottom: 28px;
+  padding: 17px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.summaryItem {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.summaryNumber {
+  color: #e4c35d;
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.summaryLabel {
+  color: #9298ad;
+  font-size: 10px;
+}
+
+.summaryDivider {
+  width: 1px;
+  height: 35px;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.levelList {
+  display: flex;
+  flex-direction: column;
+}
+
+.levelItem {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  column-gap: 14px;
+  min-width: 0;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.levelIcon {
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 13px;
+  background: #252a3e;
+  color: #9298ad;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.timelineLine {
+  width: 2px;
+  min-height: 26px;
+  flex: 1;
+  margin: 5px 0;
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.levelCard {
+  min-width: 0;
+  margin-bottom: 16px;
+  padding: 17px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.025);
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.levelCardTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.levelIdentity {
+  min-width: 0;
+}
+
+.levelNumber {
+  display: block;
+  margin-bottom: 5px;
+  color: #9298ad;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+}
+
+.levelName {
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: #f5f5f7;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 5px 9px;
+  border: 1px solid transparent;
+  border-radius: 20px;
+  font-size: 9px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.completedBadge {
+  border-color: rgba(68, 190, 135, 0.2);
+  background: rgba(68, 190, 135, 0.1);
+  color: #65d9a5;
+}
+
+.currentBadge {
+  border-color: rgba(228, 195, 93, 0.25);
+  background: rgba(228, 195, 93, 0.12);
+  color: #e8c65e;
+}
+
+.upcomingBadge {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  color: #9298ad;
+}
+
+.levelCardBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.xpRequirement {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #c4a54e;
+  font-size: 11px;
+}
+
+.currentHint {
+  color: #e8c65e;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.lockHint {
+  color: #9298ad;
+  font-size: 10px;
+}
+
+.finalHint {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #e8c65e;
+  font-size: 10px;
+}
+
+.completed .levelIcon {
+  border-color: rgba(68, 190, 135, 0.25);
+  background: rgba(68, 190, 135, 0.12);
+  color: #65d9a5;
+}
+
+.completed .timelineLine {
+  background: rgba(68, 190, 135, 0.3);
+}
+
+.completed .levelCard {
+  border-color: rgba(68, 190, 135, 0.12);
+}
+
+.current .levelIcon {
+  border-color: rgba(228, 195, 93, 0.45);
+  background: rgba(228, 195, 93, 0.15);
+  color: #e8c65e;
+  box-shadow: 0 0 18px rgba(228, 195, 93, 0.08);
+}
+
+.current .levelCard {
+  border-color: rgba(228, 195, 93, 0.35);
+  background: linear-gradient(
+    110deg,
+    rgba(228, 195, 93, 0.07),
+    rgba(255, 255, 255, 0.02)
+  );
+}
+
+.upcoming .levelCard {
+  opacity: 0.78;
+}
+
+.upcoming .levelName {
+  color: #c0c4d1;
+}
+
+.emptyMessage {
+  margin: 0;
+  padding: 24px 10px;
+  color: #9298ad;
+  font-size: 13px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+@media (hover: hover) {
+  .levelCard:hover {
+    border-color: rgba(212, 175, 55, 0.22);
+    background-color: rgba(255, 255, 255, 0.04);
+    transform: translateY(-1px);
+  }
+}
+
+@media (max-width: 600px) {
+  .roadmap {
+    padding: 18px;
+    border-radius: 15px;
+  }
+
+  .title {
+    font-size: 19px;
+  }
+
+  .headerIcon {
+    width: 39px;
+    height: 39px;
+  }
+
+  .summary {
+    gap: 8px;
+    padding: 15px 7px;
+  }
+
+  .summaryNumber {
+    font-size: 18px;
+  }
+
+  .summaryLabel {
+    font-size: 9px;
+  }
+
+  .levelItem {
+    grid-template-columns: 34px minmax(0, 1fr);
+    column-gap: 10px;
+  }
+
+  .levelIcon {
+    width: 34px;
+    height: 34px;
+    border-radius: 11px;
+  }
+
+  .levelCard {
+    padding: 13px;
+    margin-bottom: 13px;
+  }
+
+  .levelName {
+    font-size: 14px;
+  }
+
+  .statusBadge {
+    padding: 5px 7px;
+    font-size: 8px;
+  }
+}
+
+@media (max-width: 380px) {
+  .roadmap {
+    padding: 14px;
+  }
+
+  .header {
+    gap: 10px;
+  }
+
+  .subtitle {
+    font-size: 11px;
+  }
+
+  .summaryLabel {
+    line-height: 1.4;
+  }
+
+  .levelCardTop {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .levelCardBottom {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .levelIcon,
+  .levelCard {
+    transition: none;
+  }
+}
+
+.rewardRoadmap {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #f5d783;
+  font-size: 11px;
+  font-weight: 700;
+}
