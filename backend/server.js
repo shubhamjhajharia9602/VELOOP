@@ -12,12 +12,15 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-  origin: [
-    "https://velop-beryl.vercel.app",
-    "http://localhost:5173"
-  ],
+  origin: "https://velop-beryl.vercel.app",
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
+
+app.options(/.*/, cors({
+  origin: "https://velop-beryl.vercel.app",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
 
