@@ -30,7 +30,6 @@ app.use(express.json());
 app.use((req, res, next) => {
   console.log("Request:", req.method, req.url);
   console.log("Origin:", req.headers.origin);
-
   next();
 });
 
@@ -40,6 +39,11 @@ app.get("/", (req, res) => {
     success: true,
     message: "VELOOP backend is running!",
   });
+});
+
+// Test Route
+app.get("/test", (req, res) => {
+  res.send("VELOOP TEST OK");
 });
 
 // Database Health Check
@@ -105,9 +109,4 @@ app.get("/api/profile", authMiddleware, async (req, res) => {
 // Start Server
 app.listen(PORT, () => {
   console.log(`VELOOP backend running on port ${PORT}`);
-});
-
-
-app.get("/test", (req, res) => {
-  res.send("VELOOP TEST OK");
 });
