@@ -106,3 +106,8 @@ app.get("/api/profile", authMiddleware, async (req, res) => {
 app.listen(PORT, () => {
   console.log(`VELOOP backend running on port ${PORT}`);
 });
+
+
+app.get("/test", (req, res) => {
+  res.send("VELOOP TEST OK");
+});
