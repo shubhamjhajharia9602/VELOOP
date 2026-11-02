@@ -28,8 +28,8 @@ app.use(express.json());
 
 // Request Logging
 app.use((req, res, next) => {
-  console.log("Request:", req.method, req.url);
-  console.log("Origin:", req.headers.origin);
+  console.log("REQUEST RECEIVED:", req.method, req.originalUrl);
+  console.log("ORIGIN:", req.headers.origin);
   next();
 });
 
@@ -43,7 +43,7 @@ app.get("/", (req, res) => {
 
 // Test Route
 app.get("/test", (req, res) => {
-  res.send("VELOOP TEST OK");
+  res.status(200).send("VELOOP TEST OK");
 });
 
 // Database Health Check
@@ -106,7 +106,30 @@ app.get("/api/profile", authMiddleware, async (req, res) => {
   }
 });
 
+// 404 Handler
+app.use((req, res) => {
+  console.log("ROUTE NOT FOUND:", req.method, req.originalUrl);
+
+  res.status(404).json({
+    success: false,
+    message: "Route not found",
+    path: req.originalUrl,
+  });
+});
+
+// Error Handler
+app.use((err, req, res, next) => {
+  console.error("SERVER ERROR:", err.message);
+
+  res.status(500).json({
+    success: false,
+    message: "Internal server error",
+  });
+});
+
 // Start Server
 app.listen(PORT, () => {
   console.log(`VELOOP backend running on port ${PORT}`);
+  console.log("TEST ROUTE: GET /test");
+  console.log("HEALTH ROUTE: GET /api/health");
 });
