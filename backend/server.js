@@ -11,7 +11,16 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: [
+    "https://velop-beryl.vercel.app",
+    "http://localhost:5173"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
+
 app.use(express.json());
 
 // Request logging (development only)
