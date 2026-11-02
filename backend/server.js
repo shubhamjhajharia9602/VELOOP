@@ -1,3 +1,4 @@
+
 require("dotenv").config();
 
 const express = require("express");
@@ -10,32 +11,30 @@ const xpRoutes = require("./routes/xpRoutes");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
-app.use(cors({
-  origin: "https://velop-beryl.vercel.app"
-}));
+// CORS Configuration
+const corsOptions = {
+  origin: [
+    "https://velop-beryl.vercel.app",
+    "http://localhost:5173"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
 
-
-
+app.use(cors(corsOptions));
+app.options(/.*/, cors(corsOptions));
 
 app.use(express.json());
 
-// Request logging (development only)
+// Request Logging
 app.use((req, res, next) => {
   console.log("Request:", req.method, req.url);
-  console.log("Content-Type:", req.headers["content-type"]);
-
-  if (req.body && Object.keys(req.body).length > 0) {
-    console.log("Request Body:", {
-      ...req.body,
-      password: req.body.password ? "[HIDDEN]" : undefined,
-    });
-  }
+  console.log("Origin:", req.headers.origin);
 
   next();
 });
 
-// Home route
+// Home Route
 app.get("/", (req, res) => {
   res.json({
     success: true,
@@ -43,7 +42,7 @@ app.get("/", (req, res) => {
   });
 });
 
-// Database health check
+// Database Health Check
 app.get("/api/health", async (req, res) => {
   try {
     const result = await pool.query(
@@ -66,13 +65,13 @@ app.get("/api/health", async (req, res) => {
   }
 });
 
-// Signup and Login routes
+// Authentication Routes
 app.use("/api/auth", authRoutes);
 
-// XP routes
+// XP Routes
 app.use("/api/xp", xpRoutes);
 
-// Protected profile route
+// Protected Profile Route
 app.get("/api/profile", authMiddleware, async (req, res) => {
   try {
     const result = await pool.query(
@@ -103,7 +102,7 @@ app.get("/api/profile", authMiddleware, async (req, res) => {
   }
 });
 
-// Start server
+// Start Server
 app.listen(PORT, () => {
-  console.log(`VELOOP backend running at http://localhost:${PORT}`);
+  console.log(`VELOOP backend running on port ${PORT}`);
 });
