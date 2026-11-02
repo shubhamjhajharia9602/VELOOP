@@ -4,6 +4,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const pool = require("./config/db");
+
 const authRoutes = require("./routes/authRoutes");
 const authMiddleware = require("./middleware/authMiddleware");
 const xpRoutes = require("./routes/xpRoutes");
@@ -11,11 +12,11 @@ const xpRoutes = require("./routes/xpRoutes");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// CORS Configuration
+// ================= CORS =================
 const corsOptions = {
   origin: [
     "https://velop-beryl.vercel.app",
-    "http://localhost:5173"
+    "http://localhost:5173",
   ],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
@@ -24,29 +25,28 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.options(/.*/, cors(corsOptions));
 
+// ================= MIDDLEWARE =================
 app.use(express.json());
 
-// Request Logging
 app.use((req, res, next) => {
-  console.log("REQUEST RECEIVED:", req.method, req.originalUrl);
-  console.log("ORIGIN:", req.headers.origin);
+  console.log(`${req.method} ${req.originalUrl}`);
   next();
 });
 
-// Home Route
+// ================= HOME =================
 app.get("/", (req, res) => {
-  res.json({
+  res.status(200).json({
     success: true,
     message: "VELOOP backend is running!",
   });
 });
 
-// Test Route
+// ================= TEST =================
 app.get("/test", (req, res) => {
   res.status(200).send("VELOOP TEST OK");
 });
 
-// Database Health Check
+// ================= DATABASE HEALTH =================
 app.get("/api/health", async (req, res) => {
   try {
     const result = await pool.query(
@@ -55,12 +55,12 @@ app.get("/api/health", async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "VELOOP backend and PostgreSQL are connected!",
+      message: "Backend and PostgreSQL connected!",
       database: result.rows[0].database,
       serverTime: result.rows[0].current_time,
     });
   } catch (error) {
-    console.error("Database connection failed:", error.message);
+    console.error("Database error:", error.message);
 
     res.status(500).json({
       success: false,
@@ -69,13 +69,13 @@ app.get("/api/health", async (req, res) => {
   }
 });
 
-// Authentication Routes
+// ================= AUTH ROUTES =================
 app.use("/api/auth", authRoutes);
 
-// XP Routes
+// ================= XP ROUTES =================
 app.use("/api/xp", xpRoutes);
 
-// Protected Profile Route
+// ================= PROFILE =================
 app.get("/api/profile", authMiddleware, async (req, res) => {
   try {
     const result = await pool.query(
@@ -92,24 +92,22 @@ app.get("/api/profile", authMiddleware, async (req, res) => {
       });
     }
 
-    return res.status(200).json({
+    res.status(200).json({
       success: true,
       user: result.rows[0],
     });
   } catch (error) {
     console.error("Profile error:", error.message);
 
-    return res.status(500).json({
+    res.status(500).json({
       success: false,
       message: "Internal server error",
     });
   }
 });
 
-// 404 Handler
+// ================= 404 =================
 app.use((req, res) => {
-  console.log("ROUTE NOT FOUND:", req.method, req.originalUrl);
-
   res.status(404).json({
     success: false,
     message: "Route not found",
@@ -117,9 +115,13 @@ app.use((req, res) => {
   });
 });
 
-// Error Handler
+// ================= ERROR HANDLER =================
 app.use((err, req, res, next) => {
   console.error("SERVER ERROR:", err.message);
+
+  if (res.headersSent) {
+    return next(err);
+  }
 
   res.status(500).json({
     success: false,
@@ -127,9 +129,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start Server
+// ================= START SERVER =================
 app.listen(PORT, () => {
   console.log(`VELOOP backend running on port ${PORT}`);
-  console.log("TEST ROUTE: GET /test");
-  console.log("HEALTH ROUTE: GET /api/health");
 });
