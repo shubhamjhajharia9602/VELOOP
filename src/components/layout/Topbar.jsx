@@ -1,4 +1,5 @@
-import { useState } from 'react';
+
+import { useState, useEffect, useRef } from 'react';
 import {
   Search,
   Bell,
@@ -12,6 +13,33 @@ import {
 
 import styles from './Topbar.module.css';
 
+const searchItems = [
+  {
+    label: 'Dashboard',
+    keywords: ['dashboard', 'home', 'overview'],
+  },
+  {
+    label: 'XP Progress',
+    keywords: ['xp', 'progress', 'current level', 'level'],
+  },
+  {
+    label: 'XP History',
+    keywords: ['history', 'activity', 'earned xp'],
+  },
+  {
+    label: 'Level Roadmap',
+    keywords: ['roadmap', 'levels', 'all levels'],
+  },
+  {
+    label: 'Rewards',
+    keywords: ['reward', 'rewards', 'prize'],
+  },
+  {
+    label: 'Play & Earn',
+    keywords: ['play', 'earn', 'game'],
+  },
+];
+
 function Topbar({
   currentXP = 0,
   onLogout,
@@ -19,23 +47,80 @@ function Topbar({
   onSearch,
 }) {
   const [searchQuery, setSearchQuery] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+
+  const searchRef = useRef(null);
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (
+        searchRef.current &&
+        !searchRef.current.contains(event.target)
+      ) {
+        setShowSuggestions(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleOutsideClick);
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, []);
+
+  const handleSearchChange = (event) => {
+    const value = event.target.value;
+    setSearchQuery(value);
+
+    const query = value.trim().toLowerCase();
+
+    if (!query) {
+      setSuggestions([]);
+      setShowSuggestions(false);
+      return;
+    }
+
+    const filtered = searchItems.filter((item) =>
+      item.keywords.some((keyword) =>
+        keyword.toLowerCase().startsWith(query) ||
+        item.label.toLowerCase().startsWith(query)
+      )
+    );
+
+    setSuggestions(filtered);
+    setShowSuggestions(true);
+  };
+
+  const selectSuggestion = (item) => {
+    setSearchQuery(item.label);
+    setShowSuggestions(false);
+
+    onSearch?.(item.label);
+  };
 
   const handleSearch = (event) => {
     event.preventDefault();
 
-    if (onSearch) {
-      onSearch(searchQuery.trim());
+    const query = searchQuery.trim().toLowerCase();
+
+    const match = searchItems.find((item) =>
+      item.keywords.some((keyword) =>
+        keyword.toLowerCase().startsWith(query) ||
+        item.label.toLowerCase().startsWith(query)
+      )
+    );
+
+    if (match) {
+      selectSuggestion(match);
     }
   };
 
   const handleLogout = () => {
     setShowProfileMenu(false);
-
-    if (onLogout) {
-      onLogout();
-    }
+    onLogout?.();
   };
 
   return (
@@ -51,13 +136,16 @@ function Topbar({
         </button>
 
         <div className={styles.pageHeading}>
-          <span className={styles.pageEyebrow}>YOUR GAMIFICATION HUB</span>
+          <span className={styles.pageEyebrow}>
+            YOUR GAMIFICATION HUB
+          </span>
           <h1>Dashboard</h1>
         </div>
       </div>
 
       <div className={styles.topbarRight}>
         <form
+          ref={searchRef}
           className={styles.searchForm}
           onSubmit={handleSearch}
           role="search"
@@ -68,8 +156,15 @@ function Topbar({
             type="search"
             placeholder="Search VELOOP..."
             value={searchQuery}
-            onChange={(event) => setSearchQuery(event.target.value)}
+            onChange={handleSearchChange}
+            onFocus={() => {
+              if (searchQuery.trim()) {
+                setShowSuggestions(true);
+              }
+            }}
             aria-label="Search VELOOP"
+            aria-expanded={showSuggestions}
+            autoComplete="off"
           />
 
           {searchQuery && (
@@ -78,12 +173,35 @@ function Topbar({
               className={styles.clearSearch}
               onClick={() => {
                 setSearchQuery('');
-                onSearch?.('');
+                setSuggestions([]);
+                setShowSuggestions(false);
               }}
               aria-label="Clear search"
             >
               <X size={15} />
             </button>
+          )}
+
+          {showSuggestions && (
+            <div className={styles.searchSuggestions}>
+              {suggestions.length > 0 ? (
+                suggestions.map((item) => (
+                  <button
+                    type="button"
+                    key={item.label}
+                    className={styles.searchSuggestion}
+                    onClick={() => selectSuggestion(item)}
+                  >
+                    <Search size={15} />
+                    <span>{item.label}</span>
+                  </button>
+                ))
+              ) : (
+                <div className={styles.noSearchResults}>
+                  No matching suggestions
+                </div>
+              )}
+            </div>
           )}
         </form>
 
@@ -177,7 +295,9 @@ function Topbar({
                 </span>
 
                 <div>
-                  <p className={styles.profileDropdownTitle}>VELOOP Member</p>
+                  <p className={styles.profileDropdownTitle}>
+                    VELOOP Member
+                  </p>
                   <p className={styles.profileDropdownSubtitle}>
                     {Number(currentXP).toLocaleString()} total XP
                   </p>

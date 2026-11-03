@@ -1,3 +1,4 @@
+
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import Sidebar from './components/layout/Sidebar';
@@ -48,10 +49,17 @@ function App() {
     try {
       const data = await apiRequest('/xp');
 
-      const nextXP = Number(data.totalXP ?? data.total_xp ?? data.currentXP ?? 0);
-      const sortedLevels = [...levels].sort((a, b) => a.xp - b.xp);
+      const nextXP = Number(
+        data.totalXP ?? data.total_xp ?? data.currentXP ?? 0
+      );
+
+      const sortedLevels = [...levels].sort(
+        (a, b) => a.xp - b.xp
+      );
+
       const reachedLevel = sortedLevels.reduce(
-        (current, level) => (nextXP >= level.xp ? level : current),
+        (current, level) =>
+          nextXP >= level.xp ? level : current,
         sortedLevels[0]
       );
 
@@ -62,7 +70,11 @@ function App() {
       ) {
         setLevelUp(reachedLevel);
       }
-      if (reachedLevel) previousLevelRef.current = reachedLevel;
+
+      if (reachedLevel) {
+        previousLevelRef.current = reachedLevel;
+      }
+
       setCurrentXP(nextXP);
 
       setXpHistory(
@@ -71,7 +83,9 @@ function App() {
 
       setError('');
     } catch {
-      setError('Unable to load your XP progress right now. Please try again.');
+      setError(
+        'Unable to load your XP progress right now. Please try again.'
+      );
     } finally {
       setLoadingXP(false);
     }
@@ -85,7 +99,12 @@ function App() {
 
   const handleLogin = (loggedInUser) => {
     setUser(loggedInUser);
-    localStorage.setItem('velopUser', JSON.stringify(loggedInUser));
+
+    localStorage.setItem(
+      'velopUser',
+      JSON.stringify(loggedInUser)
+    );
+
     setActiveSection('overview');
   };
 
@@ -107,21 +126,41 @@ function App() {
     setSidebarOpen(false);
   };
 
+  // Search Navigation
   const handleSearch = (query) => {
     const normalizedQuery = query.trim().toLowerCase();
 
     if (!normalizedQuery) return;
 
     const sectionMap = [
-      { keywords: ['overview', 'dashboard', 'home'], section: 'overview' },
-      { keywords: ['level', 'current level'], section: 'level' },
-      { keywords: ['roadmap', 'all levels', 'progress'], section: 'levels' },
-      { keywords: ['reward', 'rewards', 'prize'], section: 'rewards' },
-      { keywords: ['play', 'earn', 'activity', 'game'], section: 'playEarn' },
+      {
+        keywords: ['dashboard', 'home', 'overview'],
+        section: 'overview',
+      },
+      {
+        keywords: ['xp history', 'history'],
+        section: 'overview',
+      },
+      {
+        keywords: ['xp progress', 'current level', 'level'],
+        section: 'level',
+      },
+      {
+        keywords: ['roadmap', 'levels', 'progress'],
+        section: 'levels',
+      },
+      {
+        keywords: ['reward', 'rewards', 'prize'],
+        section: 'rewards',
+      },
+      {
+        keywords: ['play', 'earn', 'activity', 'game', 'xp'],
+        section: 'playEarn',
+      },
     ];
 
     const match = sectionMap.find(({ keywords }) =>
-      keywords.some((keyword) => keyword.includes(normalizedQuery))
+      keywords.some((keyword) => keyword === normalizedQuery)
     );
 
     if (match) {
@@ -144,10 +183,14 @@ function App() {
     <>
       <div className="dashboard-welcome">
         <div>
-          <p className="dashboard-eyebrow">YOUR JOURNEY CONTINUES</p>
+          <p className="dashboard-eyebrow">
+            YOUR JOURNEY CONTINUES
+          </p>
+
           <h1>
             Welcome back, {displayName}!
           </h1>
+
           <p className="dashboard-subtitle">
             Keep earning XP and make progress toward your next level.
           </p>
@@ -162,6 +205,7 @@ function App() {
       {error && (
         <div className="dashboard-error" role="alert">
           {error}
+
           <button type="button" onClick={loadXP}>
             Retry
           </button>
@@ -169,7 +213,9 @@ function App() {
       )}
 
       {loadingXP && (
-        <p className="dashboard-loading">Refreshing your XP...</p>
+        <p className="dashboard-loading">
+          Refreshing your XP...
+        </p>
       )}
 
       <div className="dashboard-main-grid">
@@ -192,7 +238,10 @@ function App() {
       <section className="dashboard-section">
         <div className="dashboard-section-heading">
           <div>
-            <p className="dashboard-eyebrow">YOUR ACTIVITY</p>
+            <p className="dashboard-eyebrow">
+              YOUR ACTIVITY
+            </p>
+
             <h2>Recent XP History</h2>
           </div>
 
@@ -212,12 +261,15 @@ function App() {
                 className="xp-history-row"
                 key={item.id ?? `${item.activity}-${index}`}
               >
-                <div className="xp-history-icon">⚡</div>
+                <div className="xp-history-icon">
+                  ⚡
+                </div>
 
                 <div className="xp-history-details">
                   <strong>
                     {item.activity || 'XP Earned'}
                   </strong>
+
                   <span>
                     {item.created_at
                       ? new Date(item.created_at).toLocaleString()
@@ -232,8 +284,12 @@ function App() {
             ))
           ) : (
             <div className="xp-history-empty">
-              <span className="xp-history-empty-icon">⚡</span>
+              <span className="xp-history-empty-icon">
+                ⚡
+              </span>
+
               <h3>No XP activity yet</h3>
+
               <p>
                 Complete an available activity to start building your XP.
               </p>
@@ -251,7 +307,10 @@ function App() {
           <section className="dashboard-page-section">
             <div className="dashboard-section-heading">
               <div>
-                <p className="dashboard-eyebrow">YOUR PROGRESS</p>
+                <p className="dashboard-eyebrow">
+                  YOUR PROGRESS
+                </p>
+
                 <h1>Current Level</h1>
               </div>
             </div>
@@ -268,7 +327,10 @@ function App() {
           <section className="dashboard-page-section">
             <div className="dashboard-section-heading">
               <div>
-                <p className="dashboard-eyebrow">LEVEL UP</p>
+                <p className="dashboard-eyebrow">
+                  LEVEL UP
+                </p>
+
                 <h1>Level Roadmap</h1>
               </div>
             </div>
@@ -282,7 +344,10 @@ function App() {
           <section className="dashboard-page-section">
             <div className="dashboard-section-heading">
               <div>
-                <p className="dashboard-eyebrow">YOUR MILESTONES</p>
+                <p className="dashboard-eyebrow">
+                  YOUR MILESTONES
+                </p>
+
                 <h1>Rewards</h1>
               </div>
             </div>
@@ -327,7 +392,11 @@ function App() {
           {renderSection()}
         </main>
       </div>
-      <LevelUpModal level={levelUp} onClose={() => setLevelUp(null)} />
+
+      <LevelUpModal
+        level={levelUp}
+        onClose={() => setLevelUp(null)}
+      />
     </div>
   );
 }
