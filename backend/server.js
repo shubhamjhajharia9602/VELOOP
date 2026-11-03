@@ -13,17 +13,13 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // ================= CORS =================
-const corsOptions = {
-  origin: [
-    "https://velop-beryl.vercel.app",
-    "http://localhost:5173",
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-};
+const allowedOrigins = [
+  "https://velop-beryl.vercel.app",
+  "http://localhost:5173",
+];
 
 app.use(cors({
-  origin: "https://velop-beryl.vercel.app",
+  origin: allowedOrigins,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
